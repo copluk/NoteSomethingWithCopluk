@@ -114,9 +114,11 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
                 NotificationCompat.InboxStyle inboxStyle =
                         new NotificationCompat.InboxStyle();
 
-                for (int i = 1; i < 5; i++) {
-                    inboxStyle.addLine("Line : " + i);
-                }
+                inboxStyle
+                        .addLine("測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試")
+                        .addLine("TextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextTextText")
+                        .setBigContentTitle("BigContentTitle")
+                        .setSummaryText("Hot");
 
                 notificationBuilder
                         .setSmallIcon(R.drawable.ic_launcher)
