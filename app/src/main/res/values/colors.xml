@@ -6,4 +6,6 @@
 
     <color name="colorPressed">#00bbbd</color>
     <color name="white">#ffffff</color>
+    <color name="textColor">#3E5690</color>
+    <color name="dialogCheckColor">#AD905E</color>
 </resources>
