@@ -39,7 +39,7 @@ public class IconButton extends LinearLayout {
         }
 
 
-        LayoutInflater.from(context).inflate(R.layout.btn_Icon, this);
+        LayoutInflater.from(context).inflate(R.layout.btn_icon, this);
         TextView txtFun = findViewById(R.id.txtFun);
         txtRedDot = findViewById(R.id.txtRedDot);
         ImageView imgFun = findViewById(R.id.imgFun);
