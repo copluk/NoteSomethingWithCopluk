@@ -18,6 +18,7 @@ import com.design.copluk.copluksample.adapter.ItemClickListener;
 import com.design.copluk.copluksample.adapter.MainAdapter;
 import com.design.copluk.copluksample.controller.ChartActivity;
 import com.design.copluk.copluksample.controller.DemoLocalNotification;
+import com.design.copluk.copluksample.controller.GoogleMapActivity;
 import com.design.copluk.copluksample.controller.HariChartActivity;
 import com.design.copluk.copluksample.controller.ScrollViewHeightActivity;
 import com.design.copluk.copluksample.receiver.DemoAlarmReceiver;
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case 5: //google map
 
-                        startActivity(new Intent(MainActivity.this , HariChartActivity.class));
+                        startActivity(new Intent(MainActivity.this , GoogleMapActivity.class));
 
                         break;
 
