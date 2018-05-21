@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.design.copluk.copluksample.adapter.ItemClickListener;
 import com.design.copluk.copluksample.adapter.MainAdapter;
+import com.design.copluk.copluksample.controller.ChartActivity;
 import com.design.copluk.copluksample.controller.DemoLocalNotification;
+import com.design.copluk.copluksample.controller.HariChartActivity;
 import com.design.copluk.copluksample.controller.ScrollViewHeightActivity;
 import com.design.copluk.copluksample.receiver.DemoAlarmReceiver;
 import com.design.copluk.copluksample.view.DesktopItemDecoration;
@@ -35,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FirebaseApp.initializeApp(this);
-//        FirebaseMessaging.getInstance().subscribeToTopic("news");
-//        String token = FirebaseInstanceId.getInstance().getToken();
-//        Log.e("Token","Token : " + token);
+        FirebaseApp.initializeApp(getApplicationContext());
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("Token","Token : " + token);
 
 
 //        sendBroadcast(new Intent(timerReceiver.RECEIVER_START));
@@ -51,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
         List<String> strings = new ArrayList<>();
         strings.add("SetAlarm");
         strings.add(1 , "Notification");
-        strings.add( "Scroll to Chane View Height");
+        strings.add("Scroll to Chane View Height");
+        strings.add("Chart Test");
+        strings.add("HariChart Test");
+        strings.add("GoogleMap Test");
         for (int i = 0; i < 5; i++) {
 
             strings.add(String.valueOf(strings.size()) +
@@ -109,6 +114,24 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
 
                         startActivity(new Intent(MainActivity.this , ScrollViewHeightActivity.class));
+
+                        break;
+
+                    case 3:
+
+                        startActivity(new Intent(MainActivity.this , ChartActivity.class));
+
+                        break;
+
+                    case 4:
+
+                        startActivity(new Intent(MainActivity.this , HariChartActivity.class));
+
+                        break;
+
+                    case 5: //google map
+
+                        startActivity(new Intent(MainActivity.this , HariChartActivity.class));
 
                         break;
 

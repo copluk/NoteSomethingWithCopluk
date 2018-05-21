@@ -17,7 +17,7 @@ import java.util.ArrayList
  * Created by copluk on 2018/4/28.
  */
 
-class ScrollViewHeightActivity : AppCompatActivity() {
+public class ScrollViewHeightActivity : AppCompatActivity() {
     var totalViewHeight: Int = 0
     var scrollParams: Int = 0
     var maxHeight: Int = 0

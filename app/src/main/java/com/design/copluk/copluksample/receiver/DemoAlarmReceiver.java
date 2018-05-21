@@ -21,7 +21,6 @@ public class DemoAlarmReceiver extends BroadcastReceiver {
 
         Log.e(getClass().getName() , "QWERTYUIO" );
 
-
     }
 
 }
