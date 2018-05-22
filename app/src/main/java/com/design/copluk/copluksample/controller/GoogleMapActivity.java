@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.design.copluk.copluksample.R;
 import com.design.copluk.copluksample.model.googleMap.DirectionResults;
+import com.design.copluk.copluksample.model.googleMap.Route;
 import com.design.copluk.copluksample.util.AlertUtil;
 import com.design.copluk.copluksample.util.GoogleMapDirectionUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,6 +49,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
     private EditText edtWhereRUGo;
     private Button btnGo;
     private RequestQueue mQueue;
+//    private DirectionResults mDirectionData;
 //    private List<Polyline> mPolyline = new ArrayList<>();
 
     @Override
@@ -92,42 +94,30 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
         mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
             @Override
             public void onPolylineClick(Polyline polyline) {
-                List<LatLng> latLngs = polyline.getPoints();
-                StringBuilder stringBuilder = new StringBuilder();
-                int index = 1;
+                Route data = (Route) polyline.getTag();
 
 
-                for (LatLng latLng : latLngs) {
-                    stringBuilder.append(index);
-                    stringBuilder.append(" : ");
-                    stringBuilder.append(latLng.latitude);
-                    stringBuilder.append(" , ");
-                    stringBuilder.append(latLng.longitude);
-                    stringBuilder.append("\n");
-
-                    index++;
+                if (data != null) {
+                    AlertDialog.Builder builder = null;
+                    builder = new AlertDialog.Builder(GoogleMapActivity.this)
+                            .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setMessage("Distance :  " + data.getLegs().get(0).getDistance().getText() +
+                                    " \nDuration :  " + data.getLegs().get(0).getDuration().getText());
+                    builder.create().show();
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(GoogleMapActivity.this)
-                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setMessage(stringBuilder.toString());
 
-                builder.create().show();
             }
         });
 
     }
 
     private void startDirections(String whereRUGo) throws UnsupportedEncodingException {
-//        String googleDirection = "https://maps.googleapis.com/maps/api/directions/json?origin=25.0470289,121.515987";
-//        googleDirection = googleDirection + "&destination=" + whereRUGo;
-//        googleDirection = googleDirection + "&key=" + getString(R.string.google_directions_key);
-
         StringRequest getRequest = new StringRequest(
                 directionSetting(this, "25.0470289,121.515987", whereRUGo,
                         GoogleMapDirectionUtil.MODE_DRIVING, true, GoogleMapDirectionUtil.LANGUAGE_TW),
@@ -137,12 +127,12 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                         mMap.clear();
 
                         Gson gson = new Gson();
-                        DirectionResults directionResults = gson.fromJson(s, DirectionResults.class);
+                        DirectionResults mDirectionData = gson.fromJson(s, DirectionResults.class);
 
-                        if (directionResults.isStatusOk()) {
+                        if (mDirectionData.isStatusOk()) {
 
-                            for (int i = 0; i < directionResults.getRoutes().size(); i++) {
-                                List<LatLng> polyList = decodePolyLines(directionResults.getRoutes().get(i).getOverviewPolyLine().getPoints());
+                            for (int i = 0; i < mDirectionData.getRoutes().size(); i++) {
+                                List<LatLng> polyList = decodePolyLines(mDirectionData.getRoutes().get(i).getOverviewPolyLine().getPoints());
 
 
                                 PolylineOptions polylineOptions = new PolylineOptions();
@@ -159,7 +149,8 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                                     polylineOptions.zIndex(i);
                                 }
 
-                                mMap.addPolyline(polylineOptions);
+                                Polyline polyline = mMap.addPolyline(polylineOptions);
+                                polyline.setTag(mDirectionData.getRoutes().get(i));
 
                             }
                         } else {

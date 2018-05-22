@@ -1,6 +1,8 @@
 package com.design.copluk.copluksample.model.googleMap;
 
 public class Steps {
+    private Distance distance;
+    private Duration duration;
     private Location start_location;
     private Location end_location;
     private OverviewPolyLine polyline;
