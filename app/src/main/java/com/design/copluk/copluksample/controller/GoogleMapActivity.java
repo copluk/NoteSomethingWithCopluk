@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -104,7 +105,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                     stringBuilder.append(latLng.longitude);
                     stringBuilder.append("\n");
 
-                    index ++;
+                    index++;
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(GoogleMapActivity.this)
@@ -138,26 +139,32 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                         Gson gson = new Gson();
                         DirectionResults directionResults = gson.fromJson(s, DirectionResults.class);
 
-                        for (int i = 0; i < directionResults.getRoutes().size(); i++) {
-                            List<LatLng> polyList = decodePolyLines(directionResults.getRoutes().get(i).getOverviewPolyLine().getPoints());
+                        if (directionResults.isStatusOk()) {
+
+                            for (int i = 0; i < directionResults.getRoutes().size(); i++) {
+                                List<LatLng> polyList = decodePolyLines(directionResults.getRoutes().get(i).getOverviewPolyLine().getPoints());
 
 
-                            PolylineOptions polylineOptions = new PolylineOptions();
-                            polylineOptions.addAll(polyList);
-                            polylineOptions.clickable(true);
-                            polylineOptions.width(15f);
-                            polylineOptions.geodesic(true);
+                                PolylineOptions polylineOptions = new PolylineOptions();
+                                polylineOptions.addAll(polyList);
+                                polylineOptions.clickable(true);
+                                polylineOptions.width(15f);
+                                polylineOptions.geodesic(true);
 
-                            if (i == 0) {
-                                polylineOptions.color(Color.argb(255, 0, 0, 255));
-                                polylineOptions.zIndex(999f);
-                            } else {
-                                polylineOptions.color(Color.argb(255, 150, 150, 150));
-                                polylineOptions.zIndex(i);
+                                if (i == 0) {
+                                    polylineOptions.color(Color.argb(255, 0, 0, 255));
+                                    polylineOptions.zIndex(999f);
+                                } else {
+                                    polylineOptions.color(Color.argb(255, 150, 150, 150));
+                                    polylineOptions.zIndex(i);
+                                }
+
+                                mMap.addPolyline(polylineOptions);
+
                             }
-
-                            mMap.addPolyline(polylineOptions);
-
+                        } else {
+                            Toast.makeText(GoogleMapActivity.this, "Oh! There is something wrong!",
+                                    Toast.LENGTH_SHORT).show();
                         }
 
 

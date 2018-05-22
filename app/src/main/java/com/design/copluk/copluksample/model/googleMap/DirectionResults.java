@@ -11,9 +11,33 @@ import java.util.List;
 public class DirectionResults {
     @SerializedName("routes")
     private List<Route> routes;
+    @SerializedName("status")
+    private String status;
+    @SerializedName("geocoded_waypoints")
+    private Geo[] geocoded_waypoints;
+    @SerializedName("error_message")
+    private String error_message;
+
 
     public List<Route> getRoutes() {
         return routes;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Geo[] getGeocoded_waypoints() {
+        return geocoded_waypoints;
+    }
+
+    public String getErrorMessage() {
+        return error_message;
+    }
+
+
+    public boolean isStatusOk() {
+        return "OK".equals(getStatus());
     }
 }
 
