@@ -177,7 +177,15 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                successDirections(response.body().string());
+                final String sss = response.body().source().readUtf8();
+
+                GoogleMapActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        successDirections(sss);
+                    }
+                });
+
             }
         });
 
