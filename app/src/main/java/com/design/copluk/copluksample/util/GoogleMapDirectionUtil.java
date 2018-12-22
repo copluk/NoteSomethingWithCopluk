@@ -13,16 +13,32 @@ import java.util.List;
  */
 
 public class GoogleMapDirectionUtil {
-    public static String MODE_DRIVING = "driving";
-    public static String MODE_WALKING = "walking";
-    public static String MODE_BICYCLING = "bicycling";
-    public static String MODE_TRANSIT = "transit";
 
-    public static String LANGUAGE_TW = "zh-TW";
-    public static String LANGUAGE_CN = "zh-CN";
-    public static String LANGUAGE_ENG = "en";
-    public static String LANGUAGE_JP = "ja";
+    public interface Mode {
+        String DRIVING = "driving";
+        String WALKING = "walking";
+        String BICYCLING = "bicycling";
+        String TRANSIT = "transit";
+    }
 
+    public interface Language {
+        String TW = "zh-TW";
+        String CN = "zh-CN";
+        String ENG = "en";
+        String JP = "ja";
+    }
+
+    private String mode;
+    private String language;
+    private boolean alternatives;
+    private Context context;
+
+    public GoogleMapDirectionUtil(Context context , String mode , String language , boolean alternatives){
+        this.mode = mode;
+        this.language = language;
+        this.alternatives = alternatives;
+        this.context = context;
+    }
 
     /**
      * 使用限制        -> https://developers.google.com/maps/documentation/directions/usage-limits?hl=zh-tw
@@ -53,6 +69,24 @@ public class GoogleMapDirectionUtil {
      */
     public static String directionSetting(Context context, String origin, String destination,
                                           String mode, boolean alternatives, String language) {
+        String[] strings = new String[]
+                {
+                        "origin=", origin,
+                        "&destination=", destination,
+                        "&mode=", mode,
+                        "&alternatives=", String.valueOf(alternatives),
+                        "&language" , language,
+                        "&key=", context.getString(R.string.google_directions_key)
+                };
+
+        StringBuilder directionUrl = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?");
+        for (String s : strings)
+            directionUrl.append(s);
+
+        return directionUrl.toString();
+    }
+
+    public String OriginToEndUrl(String origin, String destination) {
         String[] strings = new String[]
                 {
                         "origin=", origin,

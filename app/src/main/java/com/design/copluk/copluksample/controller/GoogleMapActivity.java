@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.design.copluk.copluksample.Network.ApiRoute;
+import com.design.copluk.copluksample.Network.AppClientManager;
 import com.design.copluk.copluksample.R;
 import com.design.copluk.copluksample.model.googleMap.DirectionResults;
 import com.design.copluk.copluksample.model.googleMap.Route;
@@ -25,20 +29,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 import static com.design.copluk.copluksample.util.GoogleMapDirectionUtil.decodePolyLines;
-import static com.design.copluk.copluksample.util.GoogleMapDirectionUtil.directionSetting;
 
 /**
  * Created by copluk on 2018/5/21.
@@ -120,16 +115,13 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
-    private void successDirections(String s){
+    private void successDirections(DirectionResults directionResults) {
         mMap.clear();
 
-        Gson gson = new Gson();
-        DirectionResults mDirectionData = gson.fromJson(s, DirectionResults.class);
+        if (directionResults.isStatusOk()) {
 
-        if (mDirectionData.isStatusOk()) {
-
-            for (int i = 0; i < mDirectionData.getRoutes().size(); i++) {
-                List<LatLng> polyList = decodePolyLines(mDirectionData.getRoutes().get(i).getOverviewPolyLine().getPoints());
+            for (int i = 0; i < directionResults.getRoutes().size(); i++) {
+                List<LatLng> polyList = decodePolyLines(directionResults.getRoutes().get(i).getOverviewPolyLine().getPoints());
 
 
                 PolylineOptions polylineOptions = new PolylineOptions();
@@ -147,7 +139,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                 }
 
                 Polyline polyline = mMap.addPolyline(polylineOptions);
-                polyline.setTag(mDirectionData.getRoutes().get(i));
+                polyline.setTag(directionResults.getRoutes().get(i));
 
             }
         } else {
@@ -159,35 +151,29 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void startDirections(String whereRUGo) throws UnsupportedEncodingException {
 
-        OkHttpClient client = new OkHttpClient().newBuilder().build();
-
-        // 建立Request，設置連線資訊
-        Request request = new Request.Builder()
-                .url(directionSetting(this, "25.0470289,121.515987", whereRUGo,
-                        GoogleMapDirectionUtil.MODE_DRIVING, true, GoogleMapDirectionUtil.LANGUAGE_TW))
-                .build();
-
-        // 建立Call
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("onErrorResponse", "onErrorResponse : " + e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String sss = response.body().source().readUtf8();
-
-                GoogleMapActivity.this.runOnUiThread(new Runnable() {
+        ApiRoute apiRoute = new AppClientManager().getClient().create(ApiRoute.class);
+        apiRoute.getDirection(
+                new GoogleMapDirectionUtil(this,
+                        GoogleMapDirectionUtil.Mode.DRIVING,
+                        GoogleMapDirectionUtil.Language.TW,
+                        true)
+                        .OriginToEndUrl("25.0470289,121.515987", whereRUGo))
+                .enqueue(new retrofit2.Callback<DirectionResults>() {
                     @Override
-                    public void run() {
-                        successDirections(sss);
+                    public void onResponse(retrofit2.Call<DirectionResults> call, final retrofit2.Response<DirectionResults> response) {
+                        GoogleMapActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                successDirections(response.body());
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(retrofit2.Call<DirectionResults> call, Throwable t) {
+                        Log.e("onErrorResponse", "onErrorResponse : " + t.getMessage());
                     }
                 });
-
-            }
-        });
 
     }
 
