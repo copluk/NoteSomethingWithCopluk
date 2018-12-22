@@ -2,14 +2,12 @@ package com.design.copluk.copluksample.service;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.support.v7.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.design.copluk.copluksample.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.Map;
 

@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.service.autofill.Dataset
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import com.design.copluk.copluksample.R

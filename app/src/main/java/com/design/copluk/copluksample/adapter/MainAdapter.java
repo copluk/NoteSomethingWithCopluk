@@ -1,15 +1,13 @@
 package com.design.copluk.copluksample.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.design.copluk.copluksample.R;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by copluk on 2017/4/26.

@@ -1,10 +1,10 @@
 package com.design.copluk.copluksample.controller
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.*
 import android.util.Log
 import android.view.ViewTreeObserver
 import com.design.copluk.copluksample.R
@@ -46,7 +46,7 @@ public class ScrollViewHeightActivity : AppCompatActivity() {
 
         rcyView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 when (newState) {
@@ -66,7 +66,7 @@ public class ScrollViewHeightActivity : AppCompatActivity() {
 
                         if (firstPosition == 0) {
 
-                            val firstTop = layoutManager.findViewByPosition(0).top
+                            val firstTop = layoutManager.findViewByPosition(0)?.top
                             Log.e("firstTop", "$firstTop")
                             if (firstTop == 0) {
 
@@ -83,7 +83,7 @@ public class ScrollViewHeightActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 var resetWhenScroll = false

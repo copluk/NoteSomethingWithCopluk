@@ -5,11 +5,11 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -80,6 +80,7 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
 
     @Override
     public void onItemClicked(View view, int position) {
+
         NotificationManager manager = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
