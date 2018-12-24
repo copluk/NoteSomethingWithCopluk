@@ -70,6 +70,15 @@ dependencies {
     def ver_firebase = "16.0.6"
     implementation "com.google.firebase:firebase-core:$ver_firebase"
     implementation "com.google.firebase:firebase-messaging:17.3.4"
+
+    def ver_dagger = "2.14.1"
+    // Dagger core
+    implementation "com.google.dagger:dagger:$ver_dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$ver_dagger"
+    // Dagger android
+    implementation "com.google.dagger:dagger-android-support:$ver_dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$ver_dagger"
+
 }
 repositories {
     mavenCentral()
