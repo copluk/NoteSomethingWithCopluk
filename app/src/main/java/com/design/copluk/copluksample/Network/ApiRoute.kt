@@ -1,4 +1,4 @@
-package com.design.copluk.copluksample.Network
+package com.design.copluk.copluksample.network
 
 import com.design.copluk.copluksample.model.googleMap.DirectionResults
 import retrofit2.Call

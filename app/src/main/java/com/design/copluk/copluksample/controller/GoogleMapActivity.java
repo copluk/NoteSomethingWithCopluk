@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.design.copluk.copluksample.Network.ApiRoute;
-import com.design.copluk.copluksample.Network.AppClientManager;
+import com.design.copluk.copluksample.network.ApiRoute;
+import com.design.copluk.copluksample.network.AppClientManager;
 import com.design.copluk.copluksample.R;
 import com.design.copluk.copluksample.model.googleMap.DirectionResults;
 import com.design.copluk.copluksample.model.googleMap.Route;

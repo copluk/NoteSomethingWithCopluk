@@ -1,4 +1,4 @@
-package com.design.copluk.copluksample.Network
+package com.design.copluk.copluksample.network
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
