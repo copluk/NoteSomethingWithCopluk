@@ -75,10 +75,10 @@ dependencies {
     def ver_dagger = "2.14.1"
     // Dagger core
     implementation "com.google.dagger:dagger:$ver_dagger"
-    kapt "com.google.dagger:dagger-compiler:$ver_dagger"
     // Dagger android
     implementation "com.google.dagger:dagger-android-support:$ver_dagger"
     kapt "com.google.dagger:dagger-android-processor:$ver_dagger"
+    kapt "com.google.dagger:dagger-compiler:$ver_dagger"
 
 }
 repositories {

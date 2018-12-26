@@ -20,7 +20,7 @@ import com.design.copluk.copluksample.controller.ChartActivity;
 import com.design.copluk.copluksample.controller.DemoLocalNotification;
 import com.design.copluk.copluksample.controller.GoogleMapActivity;
 import com.design.copluk.copluksample.controller.HariChartActivity;
-import com.design.copluk.copluksample.controller.ScrollViewHeightActivity;
+import com.design.copluk.copluksample.controller.ScrollViewChangeHeightActivity;
 import com.design.copluk.copluksample.receiver.DemoAlarmReceiver;
 import com.design.copluk.copluksample.view.DesktopItemDecoration;
 import com.google.firebase.FirebaseApp;
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case 2:
 
-                        startActivity(new Intent(MainActivity.this , ScrollViewHeightActivity.class));
+                        startActivity(new Intent(MainActivity.this , ScrollViewChangeHeightActivity.class));
 
                         break;
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import dagger.android.AndroidInjection;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,6 +34,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import static com.design.copluk.copluksample.util.GoogleMapDirectionUtil.decodePolyLines;
 
 /**
@@ -44,9 +47,12 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
     private EditText edtWhereRUGo;
     private Button btnGo;
 
+    @Inject
+    ApiRoute apiRoute;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_google_map_demo);
@@ -144,7 +150,6 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void startDirections(String whereRUGo) throws UnsupportedEncodingException {
 
-        ApiRoute apiRoute = new AppClientManager().getClient().create(ApiRoute.class);
         apiRoute.getDirection(
                 new GoogleMapDirectionUtil(this,
                         GoogleMapDirectionUtil.Mode.DRIVING,
