@@ -2,8 +2,9 @@ package com.design.copluk.copluksample
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.design.copluk.copluksample.di.AppInjector
-import com.design.copluk.copluksample.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.DispatchingAndroidInjector
@@ -18,6 +19,12 @@ class MainApplication : Application(), HasActivityInjector {
         super.onCreate()
 
         AppInjector.init(this)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+
+        MultiDex.install(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

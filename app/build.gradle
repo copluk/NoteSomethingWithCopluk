@@ -8,11 +8,12 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.design.copluk.copluksample"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         def AppName = "NoteCopluk"
@@ -59,10 +60,13 @@ dependencies {
     // add mp Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
+
     // add web connect
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    def ver_retrofit2 = "2.4.0"
+    implementation "com.squareup.retrofit2:retrofit:$ver_retrofit2"
+    implementation "com.squareup.retrofit2:converter-gson:$ver_retrofit2"
 
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
@@ -79,6 +83,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$ver_dagger"
     kapt "com.google.dagger:dagger-android-processor:$ver_dagger"
     kapt "com.google.dagger:dagger-compiler:$ver_dagger"
+
+
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
 repositories {

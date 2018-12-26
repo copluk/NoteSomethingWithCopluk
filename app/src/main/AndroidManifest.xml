@@ -61,7 +61,7 @@
         <meta-data
             tools:replace="android:value"
             android:name="android.support.VERSION"
-            android:value="26.1.0" />
+            android:value="28.0.0" />
 
         <activity android:name=".controller.HariChartActivity"/>
         <activity android:name=".controller.GoogleMapActivity"/>
