@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import dagger.android.AndroidInjection;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.design.copluk.copluksample.di.Injectable;
 import com.design.copluk.copluksample.network.ApiRoute;
 import com.design.copluk.copluksample.network.AppClientManager;
 import com.design.copluk.copluksample.R;
@@ -33,30 +35,27 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import static com.design.copluk.copluksample.util.GoogleMapDirectionUtil.decodePolyLines;
 
 /**
  * Created by copluk on 2018/5/21.
  */
 
-public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback , Injectable {
     private GoogleMap mMap;
     private EditText edtWhereRUGo;
     private Button btnGo;
-//    private DirectionResults mDirectionData;
-//    private List<Polyline> mPolyline = new ArrayList<>();
 
-    //    private RequestQueue mQueue;
+    @Inject
+    ApiRoute apiRoute;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_google_map_demo);
-
-//        //create volleyQueue
-//        mQueue = Volley.newRequestQueue(this);
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -151,7 +150,6 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void startDirections(String whereRUGo) throws UnsupportedEncodingException {
 
-        ApiRoute apiRoute = new AppClientManager().getClient().create(ApiRoute.class);
         apiRoute.getDirection(
                 new GoogleMapDirectionUtil(this,
                         GoogleMapDirectionUtil.Mode.DRIVING,
