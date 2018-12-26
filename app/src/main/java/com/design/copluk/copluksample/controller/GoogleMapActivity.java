@@ -43,20 +43,13 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
     private GoogleMap mMap;
     private EditText edtWhereRUGo;
     private Button btnGo;
-//    private DirectionResults mDirectionData;
-//    private List<Polyline> mPolyline = new ArrayList<>();
 
-    //    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_google_map_demo);
-
-//        //create volleyQueue
-//        mQueue = Volley.newRequestQueue(this);
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);

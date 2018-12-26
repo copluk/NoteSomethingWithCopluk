@@ -17,7 +17,7 @@ import java.util.ArrayList
  * Created by copluk on 2018/4/28.
  */
 
-public class ScrollViewHeightActivity : AppCompatActivity() {
+class ScrollViewHeightActivity : AppCompatActivity() {
     var totalViewHeight: Int = 0
     var scrollParams: Int = 0
     var maxHeight: Int = 0
@@ -29,7 +29,7 @@ public class ScrollViewHeightActivity : AppCompatActivity() {
 
         val adapter = MainAdapter(this)
         rcyView.adapter = adapter
-        rcyView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rcyView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         val strings = ArrayList<String>()
         for (i in 0..25) {
