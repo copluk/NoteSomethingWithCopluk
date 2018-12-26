@@ -2,6 +2,7 @@ package com.design.copluk.copluksample
 
 import android.app.Activity
 import android.app.Application
+import com.design.copluk.copluksample.di.AppInjector
 import com.design.copluk.copluksample.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
@@ -16,10 +17,7 @@ class MainApplication : Application(), HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
 
-        DaggerAppComponent.builder()
-                .application(this)
-                .build()
-                .inject(this)
+        AppInjector.init(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.design.copluk.copluksample.di.Injectable;
 import com.design.copluk.copluksample.network.ApiRoute;
 import com.design.copluk.copluksample.network.AppClientManager;
 import com.design.copluk.copluksample.R;
@@ -42,7 +43,7 @@ import static com.design.copluk.copluksample.util.GoogleMapDirectionUtil.decodeP
  * Created by copluk on 2018/5/21.
  */
 
-public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback , Injectable {
     private GoogleMap mMap;
     private EditText edtWhereRUGo;
     private Button btnGo;
@@ -52,7 +53,6 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_google_map_demo);
