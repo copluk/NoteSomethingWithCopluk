@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 
 import com.design.copluk.copluksample.R;
 import com.design.copluk.copluksample.adapter.ItemClickListener;
-import com.design.copluk.copluksample.adapter.MainAdapter;
+import com.design.copluk.copluksample.adapter.ScrollSampleAdapter;
 import com.design.copluk.copluksample.view.DesktopItemDecoration;
 
 import java.util.ArrayList;
@@ -27,11 +27,11 @@ import java.util.List;
 
 public class DemoLocalNotification extends AppCompatActivity implements ItemClickListener {
 
-    private int notifiID = 1;
-    int replaceNotifiID = 0;
-    int styleNotifiID = -1;
-    int retoveViewNotifiID = -2;
-    String notifiTitle = "Copluk";
+    private int notifyID = 1;
+    int replaceNotifyID = 0;
+    int styleNotifyID = -1;
+    int removeViewNotifyID = -2;
+    String notifyTitle = "Copluk";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
         setContentView(R.layout.activity_main);
         RecyclerView rcvMain = (RecyclerView) findViewById(R.id.mainRecyclerView);
 
-        final MainAdapter adapter = new MainAdapter(this);
+        final ScrollSampleAdapter adapter = new ScrollSampleAdapter(this);
         rcvMain.setAdapter(adapter);
 
         List<String> strings = new ArrayList<>();
@@ -90,25 +90,25 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
             default:
                 notificationBuilder
                         .setSmallIcon(R.drawable.btn_stat_notify_template)
-                        .setContentTitle(notifiTitle)
-                        .setContentText("Notification ID : " + String.valueOf(notifiID));
+                        .setContentTitle(notifyTitle)
+                        .setContentText("Notification ID : " + String.valueOf(notifyID));
 
                 notification = notificationBuilder.build();
-                manager.notify(notifiID, notification);
-                notifiID++;
+                manager.notify(notifyID, notification);
+                notifyID++;
                 break;
 
             case 0:
                 notificationBuilder
                         .setSmallIcon(R.drawable.btn_stat_notify_template_no_bg)
-                        .setContentTitle(notifiTitle)
-                        .setContentText("SingleNotification  ID : " + replaceNotifiID)
+                        .setContentTitle(notifyTitle)
+                        .setContentText("SingleNotification  ID : " + replaceNotifyID)
                         .setDefaults(Notification.DEFAULT_LIGHTS)
                         .setLights(0xff00ff00, 300, 1000);
 
 
                 notification = notificationBuilder.build();
-                manager.notify(replaceNotifiID, notification);
+                manager.notify(replaceNotifyID, notification);
                 break;
 
             case 1:
@@ -123,13 +123,13 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
 
                 notificationBuilder
                         .setSmallIcon(R.drawable.ic_launcher)
-                        .setContentTitle(notifiTitle)
+                        .setContentTitle(notifyTitle)
                         .setContentText("InboxStyle ID : " + "-1")
                         .setStyle(inboxStyle)
                         .setDefaults(Notification.DEFAULT_LIGHTS);
 
                 notification = notificationBuilder.build();
-                manager.notify(styleNotifiID, notification);
+                manager.notify(styleNotifyID, notification);
                 break;
 
             case 2:
@@ -137,8 +137,8 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
 
                 notificationBuilder
                         .setSmallIcon(R.drawable.ic_launcher)
-                        .setContentTitle(notifiTitle)
-                        .setContentText("InboxStyle ID : " + String.valueOf(retoveViewNotifiID))
+                        .setContentTitle(notifyTitle)
+                        .setContentText("InboxStyle ID : " + String.valueOf(removeViewNotifyID))
                         .setContent(remoteViews)
                         .setCustomBigContentView(remoteViews)
                         .setAutoCancel(false)
@@ -146,7 +146,7 @@ public class DemoLocalNotification extends AppCompatActivity implements ItemClic
                         .setPriority(Notification.PRIORITY_MAX);
 
                 notification = notificationBuilder.build();
-                manager.notify(retoveViewNotifiID, notification);
+                manager.notify(removeViewNotifyID, notification);
                 break;
 
         }

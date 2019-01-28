@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.ViewTreeObserver
 import com.design.copluk.copluksample.R
 import com.design.copluk.copluksample.adapter.MainAdapter
+import com.design.copluk.copluksample.adapter.ScrollSampleAdapter
 
 import kotlinx.android.synthetic.main.activity_scrollview_height.*
 import java.util.ArrayList
@@ -27,7 +28,7 @@ class ScrollViewChangeHeightActivity  : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrollview_height)
 
-        val adapter = MainAdapter(this)
+        val adapter = ScrollSampleAdapter(this)
         rcyView.adapter = adapter
         rcyView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 

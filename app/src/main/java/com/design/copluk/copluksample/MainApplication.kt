@@ -17,13 +17,11 @@ class MainApplication : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-
         AppInjector.init(this)
     }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-
         MultiDex.install(this)
     }
 

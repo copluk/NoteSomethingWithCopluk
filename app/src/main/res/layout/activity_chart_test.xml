@@ -12,7 +12,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|start|center_vertical"
-            android:text="left" />
+            android:text="left"
+            android:visibility="gone"/>
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/chart"
@@ -25,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|end|center_vertical"
-            android:text="Right" />
+            android:text="Right"
+            android:visibility="gone"/>
 
 
     </FrameLayout>

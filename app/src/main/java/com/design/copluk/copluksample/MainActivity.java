@@ -21,6 +21,7 @@ import com.design.copluk.copluksample.controller.DemoLocalNotification;
 import com.design.copluk.copluksample.controller.GoogleMapActivity;
 import com.design.copluk.copluksample.controller.HariChartActivity;
 import com.design.copluk.copluksample.controller.ScrollViewChangeHeightActivity;
+import com.design.copluk.copluksample.model.ClickItem;
 import com.design.copluk.copluksample.receiver.DemoAlarmReceiver;
 import com.design.copluk.copluksample.view.DesktopItemDecoration;
 import com.google.firebase.FirebaseApp;
@@ -33,6 +34,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     final String TAG = getClass().getName();
 
+    private List<ClickItem> clickItems = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         Log.e("Token","Token : " + token);
 
 
+        clickItems.add(new ClickItem("Scroll to Chane View Height" , ScrollViewChangeHeightActivity.class));
+        clickItems.add(new ClickItem("Chart Test" , ChartActivity.class));
+        clickItems.add(new ClickItem("HariChart Test" , HariChartActivity.class));
+        clickItems.add(new ClickItem("GoogleMap Test" , GoogleMapActivity.class));
 //        sendBroadcast(new Intent(timerReceiver.RECEIVER_START));
 
         RecyclerView rcvMain = (RecyclerView) findViewById(R.id.mainRecyclerView);
@@ -51,19 +58,14 @@ public class MainActivity extends AppCompatActivity {
         final MainAdapter adapter = new MainAdapter(this);
         rcvMain.setAdapter(adapter);
 
-        List<String> strings = new ArrayList<>();
-        strings.add("SetAlarm");
-        strings.add(1 , "Notification");
-        strings.add("Scroll to Chane View Height");
-        strings.add("Chart Test");
-        strings.add("HariChart Test");
-        strings.add("GoogleMap Test");
-        for (int i = 0; i < 5; i++) {
+//        List<String> strings = new ArrayList<>();
+//        strings.add("SetAlarm");
+//        strings.add(1 , "Notification");
+//        strings.add("Scroll to Chane View Height");
+//        strings.add("Chart Test");
+//        strings.add("HariChart Test");
+//        strings.add("GoogleMap Test");
 
-            strings.add(String.valueOf(strings.size()) +
-                    " : " +
-                    String.valueOf(strings.size()));
-        }
 
         View view = new View(this);
         view.setBackgroundColor(ContextCompat.getColor(this, R.color.main_text));
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.setItemClick(setItemClickListener());
 
-        adapter.setData(strings);
+        adapter.setData(clickItems);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -97,52 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(View view, int position) {
 
-                switch (position) {
-                    case 0:
-                        Log.e(TAG, "alarm start");
-                        Intent intentAlarm = new Intent(DemoAlarmReceiver.START_RECEIVER);
-                        PendingIntent pending = PendingIntent.getBroadcast(MainActivity.this, 0, intentAlarm, 0);
-                        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                        alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10 * 1000, 5 * 1000, pending);
-                        break;
-
-                    case 1:
-
-                        startActivity(new Intent(MainActivity.this , DemoLocalNotification.class));
-
-                        break;
-
-                    case 2:
-
-                        startActivity(new Intent(MainActivity.this , ScrollViewChangeHeightActivity.class));
-
-                        break;
-
-                    case 3:
-
-                        startActivity(new Intent(MainActivity.this , ChartActivity.class));
-
-                        break;
-
-                    case 4:
-
-                        startActivity(new Intent(MainActivity.this , HariChartActivity.class));
-
-                        break;
-
-                    case 5: //google map
-
-                        startActivity(new Intent(MainActivity.this , GoogleMapActivity.class));
-
-                        break;
-
-
-                    default:
-
-                        Toast.makeText(MainActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
-
-                        break;
-                }
+                startActivity(new Intent(MainActivity.this , clickItems.get(position).activity));
 
             }
         };

@@ -3,30 +3,24 @@ package com.design.copluk.copluksample.controller
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
-import android.service.autofill.Dataset
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.design.copluk.copluksample.R
-import com.design.copluk.copluksample.controller.ChartActivity.BarValueFormatter
-import com.design.copluk.copluksample.controller.ChartActivity.LabelFormatter
-import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.animation.ChartAnimator
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
+import com.github.mikephil.charting.interfaces.dataprovider.BarDataProvider
+import com.github.mikephil.charting.renderer.HorizontalBarChartRenderer
+import com.github.mikephil.charting.utils.ViewPortHandler
 import kotlinx.android.synthetic.main.activity_chart_test.*
 import java.text.DecimalFormat
-import java.util.ArrayList
-import java.util.Collections.rotate
-import com.github.mikephil.charting.utils.ViewPortHandler
-import com.github.mikephil.charting.animation.ChartAnimator
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.interfaces.dataprovider.BarDataProvider
-import com.github.mikephil.charting.renderer.BarChartRenderer
-import com.github.mikephil.charting.renderer.HorizontalBarChartRenderer
+import java.util.*
 
 
 /**
@@ -52,7 +46,7 @@ class HariChartActivity : AppCompatActivity() {
 
         val l = chart.legend
         l.isWordWrapEnabled = true
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
         l.orientation = Legend.LegendOrientation.HORIZONTAL
         l.setDrawInside(true)
@@ -77,12 +71,8 @@ class HariChartActivity : AppCompatActivity() {
 
         val mLeftAxis = chart.axisLeft
         mLeftAxis.setDrawGridLines(false)
-        mLeftAxis.setDrawZeroLine(true)
-//        mLeftAxis.labelCount = 7
-        mLeftAxis.setDrawTopYLabelEntry(true)
-//        mLeftAxis.setDrawAxisLine(false)
-//        mLeftAxis.axisMinimum = 0f
-
+//        mLeftAxis.setDrawZeroLine(true)
+//        mLeftAxis.setDrawTopYLabelEntry(true)
 
         val INT_FORMAT = DecimalFormat("###")
         val mXAxis = chart.xAxis
@@ -93,11 +83,6 @@ class HariChartActivity : AppCompatActivity() {
         mXAxis.valueFormatter = IAxisValueFormatter { value, axis ->
             val lastIdx = axis.mEntryCount - 1
             var s = "test"
-//            if (value == axis.mEntries[lastIdx]){
-//                s = "test"
-//            }else{
-//                s = INT_FORMAT.format(value.toDouble())
-//            }
             return@IAxisValueFormatter s
         }
 
@@ -124,8 +109,8 @@ class HariChartActivity : AppCompatActivity() {
 
         val dataSet = BarDataSet(entries, "Label") // add entries to dataset
         dataSet.color = Color.BLUE
-        dataSet.valueTextColor = Color.BLACK // styling, ...
-        dataSet.setDrawValues(true)
+        dataSet.valueTextColor = Color.TRANSPARENT // styling, ...
+//        dataSet.setDrawValues(true)
         dataSet.valueTextSize = 15f
 
         val leftDataObjects = ArrayList<ChartData>()
@@ -140,26 +125,77 @@ class HariChartActivity : AppCompatActivity() {
         val leftEntries = leftDataObjects.map { (BarEntry(it.valueX.toFloat(), -it.valueY.toFloat())) }
 
 
-
         val leftDataSet = BarDataSet(leftEntries, "leftLabel") // add entries to dataset
         leftDataSet.color = Color.RED
-        leftDataSet.valueTextColor = Color.BLACK // styling, ...
-        leftDataSet.setDrawValues(true)
+        leftDataSet.valueTextColor = Color.TRANSPARENT // styling, ...
+//        leftDataSet.setDrawValues(true)
         leftDataSet.valueTextSize = 15f
+
+
+        val valueDataObjects = ArrayList<ChartData>()
+        for (i in 0..19) {
+            val chartData = ChartData()
+            chartData.valueX = i
+            chartData.valueY = i
+
+            valueDataObjects.add(chartData)
+        }
+
+        val valueEntries = valueDataObjects.map {
+            BarEntry(it.valueX.toFloat(), 0.1f)
+        }
+        var j = 0
+        valueEntries.forEach{ it.data = j
+            j++}
+        val valueDataSet = BarDataSet(valueEntries, "Label") // add entries to dataset
+        valueDataSet.valueTextColor = Color.BLACK // styling, ...
+        valueDataSet.color = Color.TRANSPARENT
+        valueDataSet.setDrawValues(true)
+        valueDataSet.valueTextSize = 15f
+        valueDataSet.valueFormatter = mTargetRateFormatter
+
+        val valueLeftDataObjects = ArrayList<ChartData>()
+        for (i in 0..19) {
+            val chartData = ChartData()
+            chartData.valueX = i
+            chartData.valueY = i
+
+            valueLeftDataObjects.add(chartData)
+        }
+
+        val valueLeftEntries = valueLeftDataObjects.map {
+           BarEntry(it.valueX.toFloat(), -0.1f)
+        }
+        var i = 0
+        valueLeftEntries.forEach{ it.data = i
+        i++}
+        val valueLeftDataSet = BarDataSet(valueLeftEntries, "Label") // add entries to dataset
+        valueLeftDataSet.valueTextColor = Color.BLACK // styling, ...
+        valueLeftDataSet.color = Color.TRANSPARENT
+        valueLeftDataSet.setDrawValues(true)
+        valueLeftDataSet.valueTextSize = 15f
+        valueLeftDataSet.valueFormatter = mTargetRateFormatter
+
+
 
 
         val lineData = BarData(dataSet)
         lineData.addDataSet(leftDataSet)
+        lineData.addDataSet(valueDataSet)
+        lineData.addDataSet(valueLeftDataSet)
         chart.data = lineData
         chart.setScaleEnabled(false) //disable zooming
         chart.setVisibleXRangeMaximum(5f)
-//        chart.setFitBars(true)
 
-//        var barChartCustomRenderer = HorizontalBarChartRendererr(chart, chart.animator, chart.viewPortHandler)
-//        chart.renderer = barChartCustomRenderer
 
 
         chart.invalidate() // refresh
+    }
+
+    var mTargetRateFormatter: IValueFormatter = object : IValueFormatter {
+        override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
+            return entry.data.toString()
+        }
     }
 
 

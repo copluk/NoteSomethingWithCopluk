@@ -1,7 +1,6 @@
 package com.design.copluk.copluksample.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,14 @@ import android.widget.TextView;
 import com.design.copluk.copluksample.R;
 import com.design.copluk.copluksample.model.ClickItem;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Created by copluk on 2017/4/26.
  */
-public class MainAdapter extends AdapterBase<RecyclerView.ViewHolder, ClickItem> {
+public class ScrollSampleAdapter extends AdapterBase<RecyclerView.ViewHolder, String> {
 
-    public MainAdapter(Context context) {
+    public ScrollSampleAdapter(Context context) {
         super(context);
     }
 
@@ -49,7 +50,7 @@ public class MainAdapter extends AdapterBase<RecyclerView.ViewHolder, ClickItem>
         }
 
         final ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.txtName.setText(getData().get(getRealPosition(position)).title);
+        viewHolder.txtName.setText(getData().get(getRealPosition(position)));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

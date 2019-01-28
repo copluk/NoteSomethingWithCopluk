@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import dagger.android.AndroidInjection;
@@ -43,7 +44,7 @@ import static com.design.copluk.copluksample.util.GoogleMapDirectionUtil.decodeP
  * Created by copluk on 2018/5/21.
  */
 
-public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback , Injectable {
+public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCallback, Injectable {
     private GoogleMap mMap;
     private EditText edtWhereRUGo;
     private Button btnGo;
@@ -71,7 +72,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                 if (!TextUtils.isEmpty(edtWhereRUGo.getText().toString())) {
                     try {
                         startDirections(edtWhereRUGo.getText().toString());
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -148,7 +149,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
-    private void startDirections(String whereRUGo) throws UnsupportedEncodingException {
+    private void startDirections(String whereRUGo){
 
         apiRoute.getDirection(
                 new GoogleMapDirectionUtil(this,
@@ -158,17 +159,18 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                         .OriginToEndUrl("25.0470289,121.515987", whereRUGo))
                 .enqueue(new retrofit2.Callback<DirectionResults>() {
                     @Override
-                    public void onResponse(retrofit2.Call<DirectionResults> call, final retrofit2.Response<DirectionResults> response) {
+                    public void onResponse(@NonNull retrofit2.Call<DirectionResults> call,@NonNull final retrofit2.Response<DirectionResults> response) {
                         GoogleMapActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                successDirections(response.body());
+                                if (response.body() != null)
+                                    successDirections(response.body());
                             }
                         });
                     }
 
                     @Override
-                    public void onFailure(retrofit2.Call<DirectionResults> call, Throwable t) {
+                    public void onFailure(@NonNull retrofit2.Call<DirectionResults> call, Throwable t) {
                         Log.e("onErrorResponse", "onErrorResponse : " + t.getMessage());
                     }
                 });

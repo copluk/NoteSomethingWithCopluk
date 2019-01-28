@@ -1,4 +1,4 @@
 <resources>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">google_map_key</string>
-    <string name="google_directions_key" templateMergeStrategy="preserve" translatable="false">google_map_directions_key</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBQaYpboQMwsXbfVnwR_P-CM4IRPFc7Nys</string>
+    <string name="google_directions_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBQaYpboQMwsXbfVnwR_P-CM4IRPFc7Nys</string>
 </resources>
